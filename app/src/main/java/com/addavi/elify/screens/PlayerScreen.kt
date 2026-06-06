@@ -1,14 +1,10 @@
 package com.addavi.elify.screens
 
 import NeonGlowSeekBar
-import android.R.attr.duration
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,11 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.rounded.KeyboardArrowLeft
-import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -45,8 +37,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -116,8 +106,8 @@ fun PlayerScreen(
         AsyncImage(
             model = song?.artworkUri,
             contentDescription = null,
-            error = painterResource(R.drawable.default_cover),
-            fallback = painterResource(R.drawable.default_cover),
+            error = painterResource(R.drawable.logo_dark),
+            fallback = painterResource(R.drawable.logo_dark),
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
@@ -207,8 +197,8 @@ fun PlayerScreen(
                 AsyncImage(
                     model = song?.artworkUri,
                     contentDescription = null,
-                    error = painterResource(R.drawable.default_cover),
-                    fallback = painterResource(R.drawable.default_cover),
+                    error = painterResource(R.drawable.logo_dark),
+                    fallback = painterResource(R.drawable.logo_dark),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(300.dp)
