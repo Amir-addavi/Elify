@@ -52,7 +52,8 @@ class MainActivity : ComponentActivity() {
                 val playerViewModel: PlayerViewModel = viewModel()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
-                val levelPage = currentRoute in listOf(Screens.Home.route, Screens.Setting.route)
+                val levelPage = currentRoute in listOf(Screens.Home.route, Screens.Setting.route ,
+                    Screens.Favorite.route)
 
 
                 Box(
@@ -74,12 +75,12 @@ class MainActivity : ComponentActivity() {
                             visible = levelPage,
 
                             enter = slideInVertically(
-                                animationSpec = tween(1200),
+                                animationSpec = tween(1500),
                                 initialOffsetY = { it }
                             ) + fadeIn(),
 
                             exit = slideOutVertically(
-                                animationSpec = tween(1200),
+                                animationSpec = tween(1500),
                                 targetOffsetY = { it }
                             ) + fadeOut()
                         )

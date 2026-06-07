@@ -178,7 +178,7 @@ fun Header(songCount : Int , viewModel: MusicViewModel){
                         painter = painterResource(com.addavi.elify.R.drawable.bell_ico),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onTertiary,
-                        modifier = Modifier.size(27.dp)
+                        modifier = Modifier.size(18.dp)
                     )
                 }
         }
@@ -216,7 +216,7 @@ fun Header(songCount : Int , viewModel: MusicViewModel){
                     painter = painterResource(com.addavi.elify.R.drawable.search_ico),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onTertiary,
-                    modifier = Modifier.size(25.dp)
+                    modifier = Modifier.padding(horizontal = 3.dp).size(20.dp)
                 )
             }
         }

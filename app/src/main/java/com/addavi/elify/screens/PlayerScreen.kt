@@ -1,6 +1,8 @@
 package com.addavi.elify.screens
 
 import NeonGlowSeekBar
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MoreVert
@@ -53,6 +56,7 @@ import com.addavi.elify.ui.theme.vazirFont
 import kotlinx.coroutines.delay
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlayerScreen(
     playerViewModel: PlayerViewModel,
@@ -156,6 +160,7 @@ fun PlayerScreen(
                             }
                         )
                         .background(MaterialTheme.colorScheme.surface)
+                        .padding(10.dp)
                 )
                 Text(
                     text = "Now Playing",
@@ -211,7 +216,8 @@ fun PlayerScreen(
                     .padding(top = 8.dp)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(20.dp))
-                    .padding(12.dp)
+                    .padding(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row {
                     Text(
@@ -254,25 +260,30 @@ fun PlayerScreen(
                 )
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround,
+                        .width(180.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(30.dp))
-                            .background(MaterialTheme.colorScheme.surface)
                             .padding(5.dp)
                     ){
                         Icon(
-                            painter = painterResource(R.drawable.skip_back_ico),
+                            painter = painterResource(R.drawable.back_player_ico),
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.tertiary,
-                            modifier = Modifier.size(30.dp)
+                            tint = MaterialTheme.colorScheme.onTertiary,
+                            modifier = Modifier.size(23.dp)
                         )
                     }
                     Box(
                         modifier = Modifier
+                            .shadow(
+                                elevation = 20.dp,
+                                spotColor = MaterialTheme.colorScheme.primary,
+                                ambientColor = MaterialTheme.colorScheme.primary,
+                                shape = RoundedCornerShape(50.dp)
+                            )
                             .clip(RoundedCornerShape(30.dp))
                             .background(MaterialTheme.colorScheme.primary)
                             .padding(5.dp)
@@ -281,23 +292,23 @@ fun PlayerScreen(
                             painter = painterResource(R.drawable.pause_player_ico),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.surface,
-                            modifier = Modifier.size(45.dp)
+                            modifier = Modifier.size(48.dp)
                         )
                     }
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(30.dp))
-                            .background(MaterialTheme.colorScheme.surface)
                             .padding(5.dp)
                     ){
                         Icon(
-                            painter = painterResource(R.drawable.skip_forwardico),
+                            painter = painterResource(R.drawable.next_player_ico),
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.tertiary,
-                            modifier = Modifier.size(30.dp)
+                            tint = MaterialTheme.colorScheme.onTertiary,
+                            modifier = Modifier.size(23.dp)
                         )
                     }
                 }
+                Spacer(modifier = Modifier.height(30.dp))
             }
         }
     }

@@ -52,10 +52,10 @@ fun BottomNavigation(NAV : NavController) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        BottomNavigationItem(NAV , R.drawable.home_ico , "Home" , Screens.Home.route)
-        BottomNavigationItem(NAV , R.drawable.heart_ico , "Favorite" , "Screens.Home.route")
-        BottomNavigationItem(NAV , R.drawable.play_list_ico , "PlayLists" , "Screens.Home.route")
-        BottomNavigationItem(NAV , R.drawable.setting_ico , "Setting" , Screens.Setting.route)
+        BottomNavigationItem(NAV , R.drawable.home_ico ,R.drawable.home_fill_ico , "Home" , Screens.Home.route)
+        BottomNavigationItem(NAV , R.drawable.favorite_ico ,R.drawable.favorite_fill_ico, "Favorite" , Screens.Favorite.route)
+        BottomNavigationItem(NAV , R.drawable.playlist_ico , R.drawable.playlist_fill_ico ,"PlayLists" , "Screens.Home.route")
+        BottomNavigationItem(NAV , R.drawable.setting_ico ,R.drawable.setting_fill_ico , "Setting" , Screens.Setting.route)
     }
 }
 
@@ -63,6 +63,7 @@ fun BottomNavigation(NAV : NavController) {
 fun BottomNavigationItem(
     navController: NavController,
     iconRes: Int,
+    activeIcon: Int,
     label: String,
     route: String
 ) {
@@ -77,9 +78,14 @@ fun BottomNavigationItem(
             .clip(RoundedCornerShape(50.dp))
             .background(if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) else Color.Transparent)
             .clickable {
-                navController.navigate(route) {
-                    launchSingleTop = true
-                    restoreState = true
+                if (currentRoute != route) {
+                    navController.navigate(route) {
+                        launchSingleTop = true
+                        restoreState = true
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                    }
                 }
             }
             .padding(3.dp),
@@ -87,10 +93,10 @@ fun BottomNavigationItem(
         verticalArrangement = Arrangement.Center
     ) {
         Icon(
-            painter = painterResource(iconRes),
+            painter = painterResource(if (selected) activeIcon else iconRes),
             contentDescription = label,
             tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onTertiary,
-            modifier = Modifier.size(28.dp)
+            modifier = Modifier.size(22.dp)
         )
         Text(
             text = label,

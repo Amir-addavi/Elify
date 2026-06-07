@@ -140,7 +140,7 @@ fun SuggestionItem(song: Song , Index : Int) {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.play_player_ico),
+                    painter = painterResource(R.drawable.play_fill_ico),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.surface
                 )

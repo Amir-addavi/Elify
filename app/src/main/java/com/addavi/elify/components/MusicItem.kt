@@ -69,8 +69,8 @@ fun SongItem(
                     .size(48.dp)
                     .clip(RoundedCornerShape(15.dp)),
                 contentScale = ContentScale.Crop,
-                placeholder = painterResource(R.drawable.default_cover),
-                error = painterResource(R.drawable.default_cover)
+                placeholder = painterResource(R.drawable.logo_light),
+                error = painterResource(R.drawable.logo_light)
             )
         }
 

@@ -4,6 +4,7 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -13,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.addavi.elify.screens.SettingScreen
 import com.addavi.elify.player.PlayerViewModel
+import com.addavi.elify.screens.FavoriteScreen
 import com.addavi.elify.screens.HomeScreen
 import com.addavi.elify.screens.PlayerScreen
 import com.addavi.elify.screens.SplashScreen
@@ -59,29 +61,17 @@ fun NavController(
         }
         composable(Screens.Home.route ,
             enterTransition = {
-
-                slideInVertically(
-
-                    initialOffsetY = { it / 4 },
-
-                    animationSpec = tween(
-                        durationMillis = 700,
-                        easing = FastOutSlowInEasing
-                    )
-
-                ) + fadeIn(
-
-                    animationSpec = tween(700)
-
-                )
+                scaleIn(
+                    initialScale = 0.8f,
+                    animationSpec = tween(500)
+                ) + fadeIn()
             },
 
             exitTransition = {
-
-                fadeOut(
-                    animationSpec = tween(300)
-                )
-
+                scaleOut(
+                    targetScale = 0.8f,
+                    animationSpec = tween(500)
+                ) + fadeOut()
             }
         ){
             HomeScreen(
@@ -95,14 +85,14 @@ fun NavController(
             enterTransition = {
                 slideInVertically(
                     initialOffsetY = { it },
-                    animationSpec = tween(400)
+                    animationSpec = tween(500)
                 )
             },
 
             popExitTransition = {
                 slideOutVertically(
                     targetOffsetY = { it },
-                    animationSpec = tween(400)
+                    animationSpec = tween(500)
                 )
             }
         ) {
@@ -110,34 +100,39 @@ fun NavController(
         }
         composable(Screens.Setting.route ,
             enterTransition = {
-
-                slideInVertically(
-
-                    initialOffsetY = { it / 4 },
-
-                    animationSpec = tween(
-                        durationMillis = 700,
-                        easing = FastOutSlowInEasing
-                    )
-
-                ) + fadeIn(
-
-                    animationSpec = tween(700)
-
-                )
+                scaleIn(
+                    initialScale = 0.8f,
+                    animationSpec = tween(500)
+                ) + fadeIn()
             },
 
             exitTransition = {
-
-                fadeOut(
-                    animationSpec = tween(300)
-                )
-
+                scaleOut(
+                    targetScale = 0.8f,
+                    animationSpec = tween(500)
+                ) + fadeOut()
             }
         ){
             SettingScreen(darkMode = isDarkTheme ,onDarkModeChange = onDarkModeChange)
         }
+        composable(Screens.Favorite.route ,
+            enterTransition = {
+                scaleIn(
+                    initialScale = 0.8f,
+                    animationSpec = tween(500)
+                ) + fadeIn()
+            },
 
+                    exitTransition = {
+                scaleOut(
+                    targetScale = 0.8f,
+                    animationSpec = tween(500)
+                ) + fadeOut()
+            }
+
+        ){
+            FavoriteScreen()
+        }
     }
 
 }
