@@ -14,6 +14,9 @@ val en = true
 val vazirFont = FontFamily(
     if (en) Font(R.font.vazir_en) else Font(R.font.vazir)
 )
+val DigitalFont = FontFamily(
+    Font(R.font.digital)
+)
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(

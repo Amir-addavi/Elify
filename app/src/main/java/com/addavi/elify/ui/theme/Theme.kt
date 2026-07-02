@@ -17,7 +17,10 @@ private val DarkColorScheme = darkColorScheme(
     onTertiary = Text2_DK,
     surface = Surface_DK,
     onBackground = NavBack_DK,
-    outline = Shdow_Color_DK
+    outline = Shdow_Color_DK,
+    surfaceTint = Text3_DK,
+    error = error_DK,
+    inversePrimary = player_DK
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -27,7 +30,10 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = Text2_LT,
     surface = Surface_LT,
     onBackground = NavBack_LT,
-    outline = Shdow_Color_LT
+    outline = Shdow_Color_LT,
+    surfaceTint = Text3_LT,
+    error = error_LT,
+    inversePrimary = player_LT
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -42,7 +48,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun ElifyTheme(
-    darkTheme: Boolean = false,
+    darkTheme: Boolean = true,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit

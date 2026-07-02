@@ -1,8 +1,6 @@
 package com.addavi.elify.components
 
-import android.net.Uri
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,41 +16,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.addavi.elify.R
 import com.addavi.elify.tools.cleanTrackTitle
 import com.addavi.elify.ui.theme.vazirFont
+import com.addavi.elify.viewmodel.MenuItemSpec
 import com.addavi.elify.viewmodel.Song
-
-
-fun getAlbumArtUri(albumId: Long): Uri {
-    return Uri.parse("content://media/external/audio/albumart/$albumId")
-}
-
 
 
 @Composable
 fun SongItem(
     song: Song,
     onClick: (Song) -> Unit,
-    background : Color
+    menuItems: List<MenuItemSpec>,
+    onAction: (String) -> Unit = {}
 ) {
 
 
     Row(
         modifier = Modifier
+            .padding(vertical = 5.dp)
             .fillMaxWidth()
+            .premiumClick(
+                shape = 20,
+                scaleDown = 0.97f,
+                onClick = {onClick(song)}
+            )
             .clip(RoundedCornerShape(20.dp))
-            .background(background)
-            .clickable{
-                onClick(song)
-            }
-            .padding(8.dp),
+            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.3f))
+            .padding(vertical = 5.dp)
+            .padding(start = 6.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -62,15 +55,13 @@ fun SongItem(
                 .background(MaterialTheme.colorScheme.surface),
             contentAlignment = Alignment.Center
         ) {
-            AsyncImage(
-                model = song.artworkUri,
-                contentDescription = null,
+
+            SongCover(
+                albumId = song.albumId,
                 modifier = Modifier
                     .size(48.dp)
                     .clip(RoundedCornerShape(15.dp)),
-                contentScale = ContentScale.Crop,
-                placeholder = painterResource(R.drawable.logo_light),
-                error = painterResource(R.drawable.logo_light)
+
             )
         }
 
@@ -99,7 +90,9 @@ fun SongItem(
             )
         }
         SongOverflowButton(
-            {}
+            song = song,
+            menuItems = menuItems,
+            onAction = onAction
         )
 
     }

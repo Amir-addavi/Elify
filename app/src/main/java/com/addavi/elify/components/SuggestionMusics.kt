@@ -29,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
@@ -37,8 +36,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
+import androidx.navigation.NavController
 import com.addavi.elify.R
+import com.addavi.elify.navigate.Screens
+import com.addavi.elify.player.PlayerViewModel
 import com.addavi.elify.tools.cleanTrackTitle
 import com.addavi.elify.ui.theme.vazirFont
 import com.addavi.elify.viewmodel.MusicViewModel
@@ -46,7 +47,12 @@ import com.addavi.elify.viewmodel.Song
 import kotlin.math.abs
 
 @Composable
-fun SuggestionMusics(viewModel: MusicViewModel) {
+fun SuggestionMusics(
+    viewModel: MusicViewModel,
+    playerViewModel: PlayerViewModel,
+    navController: NavController
+) {
+
 
     val randomSongs by viewModel.randomSongs.collectAsStateWithLifecycle()
 
@@ -64,7 +70,7 @@ fun SuggestionMusics(viewModel: MusicViewModel) {
     ) {
         Box(
             modifier = Modifier
-                .size(width = 160.dp , height = 150.dp)
+                .size(width = 160.dp, height = 150.dp)
                 .onGloballyPositioned {
                     val bounds = it.boundsInParent()
                     boxCenterX = bounds.left + bounds.width / 2
@@ -104,7 +110,13 @@ fun SuggestionMusics(viewModel: MusicViewModel) {
                         scaleY = scale
                     }
                 ) {
-                    SuggestionItem(song , index)
+                    SuggestionItem(song, index, {
+                        playerViewModel.setPlaylist(randomSongs)
+                        playerViewModel.playSong(song)
+                        navController.navigate(Screens.Player.route) {
+                            launchSingleTop = true
+                        }
+                    })
                 }
             }
         }
@@ -112,9 +124,17 @@ fun SuggestionMusics(viewModel: MusicViewModel) {
 }
 
 @Composable
-fun SuggestionItem(song: Song , Index : Int) {
+fun SuggestionItem(song: Song, Index: Int, onClick: () -> Unit) {
+
+
     Column(
-        modifier = Modifier.width(150.dp),
+        modifier = Modifier
+            .width(150.dp)
+            .premiumClick(
+                shape = 20,
+                scaleDown = 0.9f,
+                onClick = onClick
+            ),
         horizontalAlignment = Alignment.Start
     ) {
         Box(
@@ -122,13 +142,11 @@ fun SuggestionItem(song: Song , Index : Int) {
                 .clip(RoundedCornerShape(20.dp)),
             contentAlignment = Alignment.BottomEnd
         ) {
-            AsyncImage(
-                model = song.artworkUri,
-                contentDescription = null,
-                fallback = painterResource(R.drawable.default_cover),
-                error = painterResource(R.drawable.default_cover),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.size(120.dp).clip(RoundedCornerShape(20.dp))
+            SongCover(
+                albumId = song.albumId,
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(RoundedCornerShape(20.dp))
             )
             Box(
                 modifier = Modifier
@@ -164,7 +182,9 @@ fun SuggestionItem(song: Song , Index : Int) {
             fontSize = 12.sp,
             color = MaterialTheme.colorScheme.onTertiary,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(horizontal = 2.dp).offset(y = (-2).dp),
+            modifier = Modifier
+                .padding(horizontal = 2.dp)
+                .offset(y = (-2).dp),
             lineHeight = 12.sp
         )
     }

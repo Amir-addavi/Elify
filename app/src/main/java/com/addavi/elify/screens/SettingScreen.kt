@@ -1,7 +1,6 @@
 package com.addavi.elify.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,17 +18,26 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.addavi.elify.R
+import com.addavi.elify.components.ThemeBottomSheet
+import com.addavi.elify.components.premiumClick
+import com.addavi.elify.navigate.Screens
 import com.addavi.elify.ui.theme.vazirFont
 
 @Composable
-fun SettingScreen(darkMode: Boolean , onDarkModeChange: (Boolean) -> Unit) {
+fun SettingScreen(darkMode: Boolean , onDarkModeChange: (Boolean) -> Unit , navController: NavController) {
+    var showThemeSheet by remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -54,11 +62,23 @@ fun SettingScreen(darkMode: Boolean , onDarkModeChange: (Boolean) -> Unit) {
                 )
             }
             LazyColumn {
+
                 items(count = 1){it
                     Spacer(modifier = Modifier.height(20.dp))
-                    SettingItem(R.drawable.theme_ico , "Theme & Colors") { onDarkModeChange(!darkMode) }
-                    SettingItem(R.drawable.language_ico , "Language & Region") {}
+                    SettingItem(R.drawable.theme_ico , "Theme & Colors") {  showThemeSheet = true  }
+                    SettingItem(R.drawable.language_ico , "Language & Region") {navController.navigate(
+                        Screens.DriveScreen.route)}
                 }
+            }
+            if (showThemeSheet) {
+                ThemeBottomSheet(
+                    isDarkTheme = darkMode,
+                    onThemeChange = {
+                        onDarkModeChange(it)
+                        showThemeSheet = false
+                    },
+                    onDismiss = { showThemeSheet = false }
+                )
             }
         }
     }
@@ -70,7 +90,9 @@ fun SettingItem(icon: Int , label: String , onClick: () -> Unit){
         modifier = Modifier
             .clip(RoundedCornerShape(15.dp))
             .fillMaxWidth()
-            .clickable(
+            .premiumClick(
+                shape = 15,
+                scaleDown = 0.96f,
                 onClick = onClick
             )
             .padding(vertical = 10.dp , horizontal = 12.dp)
